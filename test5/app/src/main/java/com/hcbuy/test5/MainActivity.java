@@ -62,12 +62,20 @@ public class MainActivity extends AppCompatActivity {
         }
         mInventoryAdapter = new InventoryAdapter(this, mInventories);
         recycler_view_list.setAdapter(mInventoryAdapter);
+        //item点击删除
         mInventoryAdapter.setOnDeleteClickListener(new InventoryAdapter.OnDeleteClickLister() {
             @Override
             public void onDeleteClick(View view, int position) {
                 mInventories.remove(position);
                 mInventoryAdapter.notifyDataSetChanged();
                 recycler_view_list.closeMenu();
+            }
+        });
+        //item点击添加
+        mInventoryAdapter.setOnAddClickListener(new InventoryAdapter.OnAddClickLister() {
+            @Override
+            public void onAddClick(View view) {
+                Log.i("test5","添加事件");
             }
         });
 

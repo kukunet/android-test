@@ -18,6 +18,7 @@ import java.util.List;
 public class InventoryAdapter extends BaseRecyclerViewAdapter<Inventory> {
 
     private OnDeleteClickLister mDeleteClickListener;
+    private OnAddClickLister mAddClickListener;
 
     //上拉、下拉
     private boolean loading = true;
@@ -49,13 +50,33 @@ public class InventoryAdapter extends BaseRecyclerViewAdapter<Inventory> {
         ((TextView) holder.getView(R.id.tv_detail)).setText(detail);
         String volume = bean.getVolume() + "方";
         ((TextView) holder.getView(R.id.tv_volume)).setText(volume);
+
+        View addView = holder.getView(R.id.tv_add);
+        if (!addView.hasOnClickListeners()) {
+            addView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mAddClickListener != null) {
+                        mAddClickListener.onAddClick(v);
+                    }
+                }
+            });
+        }
     }
 
     public void setOnDeleteClickListener(OnDeleteClickLister listener) {
         this.mDeleteClickListener = listener;
     }
 
+    public void setOnAddClickListener(OnAddClickLister listener) {
+        this.mAddClickListener = listener;
+    }
+
     public interface OnDeleteClickLister {
         void onDeleteClick(View view, int position);
+    }
+
+    public interface OnAddClickLister {
+        void onAddClick(View view);
     }
 }
